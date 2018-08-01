@@ -27,3 +27,4 @@ requires:
 
 artifacts:
   - /var/logs
+  
