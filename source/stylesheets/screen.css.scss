@@ -97,6 +97,8 @@ h4 {
       box-sizing: border-box;
       margin: 10px 5px;
       width: 95%;
+      margin: $nav-v-padding $nav-padding;
+      width: $nav-width - ($nav-padding*2);
       outline: none;
       -webkit-border-radius: 50px;
       -moz-border-radius: 50px;
@@ -279,6 +281,7 @@ h4 {
   }
 
   .lang-selector {
+    top: 0;
     position: fixed;
     z-index: 50;
     border-bottom: 5px solid $lang-select-active-bg;
