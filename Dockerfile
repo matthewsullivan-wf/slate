@@ -38,6 +38,9 @@ RUN npm install http-server -g
 # bring the static html in
 COPY --from=0 /local-build/build/ s/cerebral-docs/
 
+# set dependency artifact
+ARG BUILD_ARTIFACTS_AUDIT=/local-build/npm.lock
+
 # open up port 8000
 EXPOSE 8000
 
