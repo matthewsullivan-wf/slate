@@ -41,8 +41,11 @@ RUN touch npm.lock
 # bring the static html in
 COPY --from=builder /local-build/build/ s/cerebral-docs/
 
+# bring in gem lock
+COPY --from=builder /local-build/Gemfile.lock /static/Gemfile.lock
+
 # set dependency artifact
-ARG BUILD_ARTIFACTS_AUDIT=/static/npm.lock
+ARG BUILD_ARTIFACTS_AUDIT=/static/npm.lock:/static/Gemfile.lock
 
 # open up port 8000
 EXPOSE 8000
