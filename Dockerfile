@@ -1,5 +1,5 @@
 #build stage
-FROM ruby:2.3-alpine
+FROM ruby:2.3-alpine as builder
 
 # bring in the code, cannot be at root, don't want name collision with middleman build dir (it's just confusing)
 WORKDIR /local-build
@@ -35,8 +35,17 @@ RUN apk add --update nodejs
 RUN npm config set unsafe-perm true
 RUN npm install http-server -g
 
+# create empty dependencies file... we have none but this is for rm
+RUN touch npm.lock
+
 # bring the static html in
-COPY --from=0 /local-build/build/ s/cerebral-docs/
+COPY --from=builder /local-build/build/ s/cerebral-docs/
+
+# bring in gem lock
+COPY --from=builder /local-build/Gemfile.lock /static/Gemfile.lock
+
+# set dependency artifact
+ARG BUILD_ARTIFACTS_AUDIT=/static/npm.lock:/static/Gemfile.lock
 
 # open up port 8000
 EXPOSE 8000
