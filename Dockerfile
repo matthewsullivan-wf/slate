@@ -35,11 +35,14 @@ RUN apk add --update nodejs
 RUN npm config set unsafe-perm true
 RUN npm install http-server -g
 
+# create empty dependencies file... we have none but this is for rm
+RUN touch npm.lock
+
 # bring the static html in
 COPY --from=builder /local-build/build/ s/cerebral-docs/
 
 # set dependency artifact
-ARG BUILD_ARTIFACTS_AUDIT=/local-build/npm.lock
+ARG BUILD_ARTIFACTS_AUDIT=npm.lock
 
 # open up port 8000
 EXPOSE 8000
