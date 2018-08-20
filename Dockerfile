@@ -42,7 +42,7 @@ RUN touch npm.lock
 COPY --from=builder /local-build/build/ s/cerebral-docs/
 
 # set dependency artifact
-ARG BUILD_ARTIFACTS_AUDIT=npm.lock
+ARG BUILD_ARTIFACTS_AUDIT=/static/npm.lock
 
 # open up port 8000
 EXPOSE 8000
