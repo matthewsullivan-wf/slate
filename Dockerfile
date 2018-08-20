@@ -1,5 +1,5 @@
 #build stage
-FROM ruby:2.3-alpine
+FROM ruby:2.3-alpine as builder
 
 # bring in the code, cannot be at root, don't want name collision with middleman build dir (it's just confusing)
 WORKDIR /local-build
@@ -36,7 +36,7 @@ RUN npm config set unsafe-perm true
 RUN npm install http-server -g
 
 # bring the static html in
-COPY --from=0 /local-build/build/ s/cerebral-docs/
+COPY --from=builder /local-build/build/ s/cerebral-docs/
 
 # set dependency artifact
 ARG BUILD_ARTIFACTS_AUDIT=/local-build/npm.lock
