@@ -1,5 +1,5 @@
 #build stage
-FROM ruby:2.5.1-alpine3.7 as builder
+FROM ruby:2.5.1-alpine as builder
 
 # bring in the code, cannot be at root, don't want name collision with middleman build dir (it's just confusing)
 WORKDIR /local-build
