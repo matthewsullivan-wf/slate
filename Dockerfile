@@ -1,5 +1,5 @@
 #build stage
-FROM ruby:2.3-alpine as builder
+FROM ruby:2.5.1-alpine3.7 as builder
 
 # bring in the code, cannot be at root, don't want name collision with middleman build dir (it's just confusing)
 WORKDIR /local-build
@@ -7,18 +7,8 @@ WORKDIR /local-build
 # bring in the code
 COPY . .
 
-RUN apk add -U curl bash ca-certificates openssl ncurses coreutils make gcc g++ libgcc linux-headers grep util-linux binutils findutils tar
-
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 6.13.0
-
-RUN mkdir -p $NVM_DIR
-
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
+# install dependencies
+RUN apk add --update nodejs nodejs-npm g++ make
 RUN bundle install
 RUN npm config set unsafe-perm true
 RUN npm install -g widdershins@3.6.0
