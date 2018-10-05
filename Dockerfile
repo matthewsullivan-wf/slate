@@ -1,5 +1,5 @@
 #build stage
-FROM ruby:2.3-alpine as builder
+FROM ruby:2.5.1-alpine as builder
 
 # bring in the code, cannot be at root, don't want name collision with middleman build dir (it's just confusing)
 WORKDIR /local-build
@@ -8,7 +8,7 @@ WORKDIR /local-build
 COPY . .
 
 # install dependencies
-RUN apk add --update nodejs g++ make
+RUN apk add --update nodejs nodejs-npm g++ make
 RUN bundle install
 RUN npm config set unsafe-perm true
 RUN npm install -g widdershins@3.6.0
