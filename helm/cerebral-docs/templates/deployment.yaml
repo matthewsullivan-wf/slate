@@ -45,10 +45,6 @@ spec:
             allowPrivilegeEscalation: false
           {{- end }}
           env:
-            - name: MSG_URL
-              value: "tls://nats-nats.workiva.svc.cluster.local:4222"
-            - name: MSG_CA_CERT
-              value: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
             - name: MSG_HEALTH_TOPIC
               valueFrom:
                 fieldRef:

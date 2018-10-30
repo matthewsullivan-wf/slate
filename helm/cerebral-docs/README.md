@@ -9,14 +9,16 @@ Parameter | Description | Default
 --- | --- | ---
 image.registry | Docker registry to pull image from | `drydock.workiva.org`
 image.repo | Docker image repo | `workiva/slate`
-image.tag | Docker image tag | `1467762`
-replicas | The number of pod replicas to run | `0`
-iamRole | IAM Role to attach to the pod | `nil`
+image.tag | Docker image tag | `1484838`
+replicas | The number of pod replicas to run | `1`
+iamRole | IAM Role to attach to the pod | Value should be supplied at runtime
 minAvailable | The minimum number of available pods during updates | `75%`
-autoscaling.minReplicas | The minimum number of replicas when autoscaling | `3`
+autoscaling.minReplicas | The minimum number of replicas when autoscaling | `1`
 autoscaling.maxReplicas | The maximum number of replicas when autoscaling | `10`
 autoscaling.metrics | List of metrics to scale on | `[]`
 ingress.clusterDomain | The base domain of the cluster the chart is being deployed to | Value should be supplied at runtime. Ex: `wk-dev.wdesk.org`
+environment.MSG_URL | URL for NATS hosts | `tls://nats-nats.workiva.svc.cluster.local:4222`
+environment.MSG_CA_CERT | NATS client certificate authority | `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt`
 secrets.TRACE_SAMPLING | TODO | Value should be supplied at runtime
 resources.limits.cpu | CPU limit for pod | `0.25`
 resources.limits.memory | Memory limit for pod | `512Mi`
@@ -73,14 +75,16 @@ Values provided as secrets will uploaded as Kubernetes Secrets and mounted into 
 
 ## Mounted Files
 
-Arbitrary files can be mounted into containers. This is done by mounting a Kubernetes Secrets as a volume in the container.
-Any files being mounted will need to exist within the `files/` before installing the chart.
+Arbitrary files can be mounted into containers. This is done by mounting a Kubernetes [Secret](https://kubernetes.io/docs/concepts/configuration/secret/) resource as a volume in the container. Files live under the top level value `files` in `values.yaml`.
+
+If you are installing the Helm chart locally, files mounted by the Helm chart will need to exist within the `files/` directory before you run the command provided in the readme.
 
 **Notes:**
 - Only one secret can be mounted to a single directory.
 - Multiple files can be included in a single secret.
 - An individual secret is limited to 1MB in size.
 - Any files that existed within the directory the volume is mounted to will be wiped.
+- File contents should be base64 encoded before passing them into the chart.
 
 More info: https://kubernetes.io/docs/concepts/configuration/secret/
 
@@ -135,7 +139,7 @@ Setup a local Kubernetes cluster using either [minikube](https://kubernetes.io/d
 
 ### Installing / Upgrading the Chart
 
-Initialize helm in your cluster if you have not already done so. https://docs.helm.sh/helm/#helm-init
+Initialize Helm in your cluster if you have not already done so. https://docs.helm.sh/helm/#helm-init
 
 ```console
 $ helm init
@@ -144,7 +148,7 @@ $ helm init
 https://docs.helm.sh/helm/#helm-upgrade
 
 _Note_ : If you want to set a value like `12345`, such as setting an image id, you will want to use `--set-string` to
-avoid helm converting your number to a float. [Customizing Charts](https://docs.helm.sh/using_helm/#customizing-the-chart-before-installing)
+avoid Helm converting your number to a float. [Customizing Charts](https://docs.helm.sh/using_helm/#customizing-the-chart-before-installing)
 
 ```console
 $ helm upgrade --install \

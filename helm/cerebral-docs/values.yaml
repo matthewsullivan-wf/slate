@@ -7,13 +7,14 @@
 image:
   registry: drydock.workiva.net
   repo: workiva/slate
-  tag: '1467762'
+  tag: '1484838'
 
 # Number of pods replicas to run.
-replicas: 3
+replicas: 1
 
 # The arn of the IAM role to be given to your container
-#iamRole: arn:aws:iam::<account>:role/<name>
+# Example: arn:aws:iam::<account>:role/<name>
+#iamRole: ''
 
 # The minimum number of available pods during updates
 minAvailable: 75%
@@ -22,7 +23,7 @@ minAvailable: 75%
 # HPA: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 # PodDisruptionBudget: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 autoscaling:
-  minReplicas: 3
+  minReplicas: 1
   maxReplicas: 10
   # TODO: This service does not have autoscaling configured
   # metrics:
@@ -52,8 +53,9 @@ ingress:
           port: 8000
 
 # Environment variables.
-# environment:
-#   MAX_QUEUE_LENGTH: 3
+environment:
+  MSG_URL: "tls://nats-nats.workiva.svc.cluster.local:4222"
+  MSG_CA_CERT: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 
 # Secret values to be supplied to containers as environment variables.
 # Secrets should not be committed to code and should be supplied at runtime.
@@ -74,7 +76,7 @@ resources:
      memory: 512Mi
 
 # TODO: You should check if your application behaves correctly when it does not have root privileges.
-# The runAsRoot setting determines if your contianer will run with root privileges. 
+# The runAsRoot setting determines if your container will run with root privileges.
 # In order to improve security this should be set to false, but until there is a chance to verify
 # your application still behaves correctly, it can be set to true.
 runAsRoot: true
