@@ -7,14 +7,16 @@
 image:
   registry: drydock.workiva.net
   repo: workiva/slate
-  tag: '1484838'
+  tag: '1514604'
+  # Uncomment to specify a full docker image for local development
+  # override: local_testing_image_name:latest
 
 # Number of pods replicas to run.
 replicas: 1
 
 # The arn of the IAM role to be given to your container
 # Example: arn:aws:iam::<account>:role/<name>
-#iamRole: ''
+# iamRole: ''
 
 # The minimum number of available pods during updates
 minAvailable: 75%

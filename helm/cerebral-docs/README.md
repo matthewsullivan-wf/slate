@@ -9,7 +9,7 @@ Parameter | Description | Default
 --- | --- | ---
 image.registry | Docker registry to pull image from | `drydock.workiva.org`
 image.repo | Docker image repo | `workiva/slate`
-image.tag | Docker image tag | `1484838`
+image.tag | Docker image tag | `1514604`
 replicas | The number of pod replicas to run | `1`
 iamRole | IAM Role to attach to the pod | Value should be supplied at runtime
 minAvailable | The minimum number of available pods during updates | `75%`
@@ -123,15 +123,17 @@ More info: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 
 ## TODO's
 
-- [ ] Verify that there aren't any sensitive values in environment section. Clean up unused secrets and environment vars `values.yaml`
+- [ ] Verify that there aren't any sensitive values in environment section. Clean up unused secrets and environment vars in `values.yaml`
 - [ ] Configure Liveness probe. See `values.yaml`
 - [ ] Enable CPU or memory based autoscaling for your application if possible. See `values.yaml`
 - [ ] If possible, raise your `minAvailable` and `autoscaling.minReplicas` to at least three for your application.
   This is a best practice which helps to ensure a highly available application.
-- [ ] Check if your container can run run as non-root user and update values.yaml accordingly
+- [ ] Check if your container can run as non-root user and update values.yaml accordingly
 - [ ] Upgrade to latest app-intelligence/messaging-sdk libraries.
 - [ ] Update your team name in the charts.yaml.
 - [ ] Select a serviceAvailabilityType in the charts.yaml.
+- [ ] Update the value `image.tag` in `values.yaml` to match the image produced by this PR. It should contain the necessary App Intelligence and Messaging SDK updates required to run in Kubernetes.
+- [ ] Check that all of the ports you are listening on are configured in your `service.yaml`
 
 ## Local Development
 

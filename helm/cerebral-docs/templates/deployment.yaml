@@ -34,7 +34,11 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
+          {{- if .Values.image.override }}
+          image: '{{ .Values.image.override }}'
+          {{- else }}
           image: '{{ .Values.image.registry }}/{{ .Values.image.repo }}:{{ .Values.image.tag }}'
+          {{- end }}
           ports:
             # TODO: Use a more informative port name.
             - name: port0
