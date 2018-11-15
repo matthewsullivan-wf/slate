@@ -19,10 +19,6 @@ spec:
         app: {{ template "template.name" . }}
         release: {{ .Release.Name }}
       annotations:
-        # By default, kubernetes will not reload pods when secrets change. We need to
-        # take the hash of the secrets and configs we depend on in order to trigger a reload.
-        # https://github.com/helm/helm/blob/master/docs/charts_tips_and_tricks.md#automatically-roll-deployments-when-configmaps-or-secrets-change
-        checksum/secrets: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
         # consul.*/ annotations will register your service in consul
         # for service discovery.
         consul.register/enabled: "true"
@@ -56,13 +52,6 @@ spec:
             {{- range $key, $value := .Values.environment }}
             - name: {{ $key }}
               value: "{{ $value }}"
-            {{- end }}
-            {{- range $key, $value := .Values.secrets }}
-            - name: {{ $key }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "template.fullname" $ }}
-                  key: {{ $key }}
             {{- end }}
           {{- if .Values.readinessProbe }}
           readinessProbe:

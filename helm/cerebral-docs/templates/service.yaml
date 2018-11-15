@@ -12,8 +12,7 @@ spec:
   ports:
     - port: 8000
       targetPort: 8000
-      # TODO: Use a more informative port name.
-      name: port0
+      name: port8000
   selector:
     app: {{ template "template.name" . }}
     release: {{ .Release.Name }}

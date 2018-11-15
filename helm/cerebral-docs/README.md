@@ -7,7 +7,7 @@
 
 Parameter | Description | Default
 --- | --- | ---
-image.registry | Docker registry to pull image from | `drydock.workiva.org`
+image.registry | Docker registry to pull image from | `drydock.workiva.net`
 image.repo | Docker image repo | `workiva/slate`
 image.tag | Docker image tag | `1514604`
 replicas | The number of pod replicas to run | `1`
@@ -17,9 +17,7 @@ autoscaling.minReplicas | The minimum number of replicas when autoscaling | `1`
 autoscaling.maxReplicas | The maximum number of replicas when autoscaling | `10`
 autoscaling.metrics | List of metrics to scale on | `[]`
 ingress.clusterDomain | The base domain of the cluster the chart is being deployed to | Value should be supplied at runtime. Ex: `wk-dev.wdesk.org`
-environment.MSG_URL | URL for NATS hosts | `tls://nats-nats.workiva.svc.cluster.local:4222`
-environment.MSG_CA_CERT | NATS client certificate authority | `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt`
-secrets.TRACE_SAMPLING | TODO | Value should be supplied at runtime
+environment.TRACE_SAMPLING | TODO | Value should be supplied at runtime
 resources.limits.cpu | CPU limit for pod | `0.25`
 resources.limits.memory | Memory limit for pod | `512Mi`
 resources.requests.cpu | Requested CPU for pod | `0.25`
@@ -123,17 +121,10 @@ More info: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 
 ## TODO's
 
-- [ ] Verify that there aren't any sensitive values in environment section. Clean up unused secrets and environment vars in `values.yaml`
-- [ ] Configure Liveness probe. See `values.yaml`
 - [ ] Enable CPU or memory based autoscaling for your application if possible. See `values.yaml`
 - [ ] If possible, raise your `minAvailable` and `autoscaling.minReplicas` to at least three for your application.
   This is a best practice which helps to ensure a highly available application.
 - [ ] Check if your container can run as non-root user and update values.yaml accordingly
-- [ ] Upgrade to latest app-intelligence/messaging-sdk libraries.
-- [ ] Update your team name in the charts.yaml.
-- [ ] Select a serviceAvailabilityType in the charts.yaml.
-- [ ] Update the value `image.tag` in `values.yaml` to match the image produced by this PR. It should contain the necessary App Intelligence and Messaging SDK updates required to run in Kubernetes.
-- [ ] Check that all of the ports you are listening on are configured in your `service.yaml`
 
 ## Local Development
 
@@ -155,7 +146,7 @@ avoid Helm converting your number to a float. [Customizing Charts](https://docs.
 ```console
 $ helm upgrade --install \
        --set ingress.clusterDomain="CLUSTER_DOMAIN_PLACEHOLDER" \
-       --set secrets.TRACE_SAMPLING="TRACE_SAMPLING_PLACEHOLDER" \
+       --set environment.TRACE_SAMPLING="TRACE_SAMPLING_PLACEHOLDER" \
        cerebral-docs .
 ```
 

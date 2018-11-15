@@ -38,7 +38,7 @@ autoscaling:
 # See: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   # Base domain for the cluster (ex. wk-dev.wdesk.org, app.wdesk.org).
-  clusterDomain: ''
+  clusterDomain: 'wk-dev.wdesk.org'
   rules:
     # Rules for h.<clusterDomain> (ex. h.wk-dev.wdesk.org).
     - subDomain: h
@@ -56,16 +56,7 @@ ingress:
 
 # Environment variables.
 environment:
-  MSG_URL: "tls://nats-nats.workiva.svc.cluster.local:4222"
-  MSG_CA_CERT: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
-
-# Secret values to be supplied to containers as environment variables.
-# Secrets should not be committed to code and should be supplied at runtime.
-secrets:
   TRACE_SAMPLING: ''
-
-# Mounted files
-# See: https://kubernetes.io/docs/concepts/configuration/secret/
 
 # Resources allocated to your container.
 # See: https://kubernetes.io/docs/concepts/policy/resource-quotas/
