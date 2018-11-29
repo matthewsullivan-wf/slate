@@ -38,7 +38,7 @@ autoscaling:
 # See: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   # Base domain for the cluster (ex. wk-dev.wdesk.org, app.wdesk.org).
-  clusterDomain: 'wk-dev.wdesk.org'
+  clusterDomain: ''
   rules:
     # Rules for h.<clusterDomain> (ex. h.wk-dev.wdesk.org).
     - subDomain: h
