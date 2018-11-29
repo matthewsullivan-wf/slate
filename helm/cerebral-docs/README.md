@@ -17,7 +17,7 @@ autoscaling.minReplicas | The minimum number of replicas when autoscaling | `1`
 autoscaling.maxReplicas | The maximum number of replicas when autoscaling | `10`
 autoscaling.metrics | List of metrics to scale on | `[]`
 ingress.clusterDomain | The base domain of the cluster the chart is being deployed to | Value should be supplied at runtime. Ex: `wk-dev.wdesk.org`
-environment.TRACE_SAMPLING | TODO | Value should be supplied at runtime
+environment.TRACE_SAMPLING | App intelligence sampling rate, set to 1 | Value should be supplied at runtime
 resources.limits.cpu | CPU limit for pod | `0.25`
 resources.limits.memory | Memory limit for pod | `512Mi`
 resources.requests.cpu | Requested CPU for pod | `0.25`
