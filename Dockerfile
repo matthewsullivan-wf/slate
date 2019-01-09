@@ -63,6 +63,9 @@ COPY --from=builder /local-build/Gemfile.lock /static/Gemfile.lock
 # set dependency artifact
 ARG BUILD_ARTIFACTS_AUDIT=/static/npm.lock:/static/Gemfile.lock
 
+RUN adduser nobody
+USER nobody
+
 # open up port 8000
 EXPOSE 8000
 
