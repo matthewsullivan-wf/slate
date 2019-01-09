@@ -7,7 +7,6 @@ size: small
 timeout: short
 
 run:
-  source: shipyard
   on-pull-request: true
   when-branch-name-is:
     - master
