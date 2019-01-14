@@ -41,6 +41,9 @@ RUN bundle exec middleman build --clean
 # run stage
 FROM alpine:3.7
 
+#package updates
+RUN apk update && apk upgrade
+
 # new workdir
 WORKDIR /static/
 
@@ -62,6 +65,9 @@ COPY --from=builder /local-build/Gemfile.lock /static/Gemfile.lock
 
 # set dependency artifact
 ARG BUILD_ARTIFACTS_AUDIT=/static/npm.lock:/static/Gemfile.lock
+
+# run as non-root user
+USER nobody
 
 # open up port 8000
 EXPOSE 8000
