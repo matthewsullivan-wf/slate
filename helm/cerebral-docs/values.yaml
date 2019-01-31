@@ -19,7 +19,7 @@ replicas: 1
 # iamRole: ''
 
 # The minimum number of available pods during updates
-minAvailable: 75%
+minAvailable: 50%
 
 # Autoscaling configuration, configures the horizontal pod autoscaler and pod disruption budget.
 # HPA: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
