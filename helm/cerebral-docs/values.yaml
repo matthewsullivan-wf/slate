@@ -40,7 +40,7 @@ ingress:
   # Base domain for the cluster (ex. wk-dev.wdesk.org, app.wdesk.org).
   clusterDomain: ''
   rewritePlaceHolder: /$1
-  rewritePathPrefix: /s/cerebral
+  rewritePathPrefix: /s/cerebral-docs
   rules:
     # Rules for h.<clusterDomain> (ex. h.wk-dev.wdesk.org).
     - subDomain: h
