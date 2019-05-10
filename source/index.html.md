@@ -11,7 +11,7 @@ language_tabs:
   - go: Go
 toc_footers: []
 includes:
-  - authentication
+  - introduction
   - workflows
   - swagger
 search: true

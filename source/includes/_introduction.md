@@ -1,4 +1,8 @@
-# Authentication
+# Code Generation
+
+Swagger is available to both view and download as JSON. You can find Swagger-UI [here](https://h.app.wdesk.com/s/cerebral/swagger-ui.html) and the JSON file [here](https://h.app.wdesk.com/s/cerebral/v2/api-docs).
+
+# Credentials
 
 The Workiva Developer API is secured using an OAuth 2.0 [Client Credentials Grant](https://tools.ietf.org/html/rfc6749#section-4.4) implementation. This authentication flow follows three steps:
 
