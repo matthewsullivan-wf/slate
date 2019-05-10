@@ -39,17 +39,17 @@ autoscaling:
 ingress:
   # Base domain for the cluster (ex. wk-dev.wdesk.org, app.wdesk.org).
   clusterDomain: ''
+  rewritePlaceHolder: /$1
+  rewritePathPrefix: /s/cerebral-docs
   rules:
     # Rules for h.<clusterDomain> (ex. h.wk-dev.wdesk.org).
     - subDomain: h
-      pathPrefix: /s/cerebral-docs
+      pathPrefix: /s/cerebral-docs/(.*)
       backends:
         - path: /
           port: 8000
-    # Rules for k.<clusterDomain> (ex. k.wk-dev.wdesk.org).
-    # This rule is for testing Kubernetes ingress before we switch
-    - subDomain: k
-      pathPrefix: /s/cerebral-docs
+    - subDomain: h
+      pathPrefix: /s/wdata-docs/prep/(.*)
       backends:
         - path: /
           port: 8000
