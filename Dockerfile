@@ -14,6 +14,24 @@ RUN helm init --client-only
 RUN helm package *
 ARG BUILD_ARTIFACTS_HELM_CHARTS=/build/*.tgz
 
+# swagger gen stage
+FROM openjdk:8u212-slim as swagger-builder
+
+# use the common workdir
+WORKDIR /local-build
+
+# bring in the bash tooling
+COPY tool tool
+
+# install wget
+RUN apt-get update && apt-get install -y wget zip unzip
+
+# grab the codegen tool
+RUN wget https://oss.sonatype.org/content/repositories/releases/io/swagger/swagger-codegen-cli/2.2.1/swagger-codegen-cli-2.2.1.jar
+
+# generate java client
+RUN bash tool/generate_swagger.sh
+
 #build stage
 FROM ruby:2.5.1-alpine as builder
 
@@ -59,6 +77,9 @@ RUN touch npm.lock
 
 # bring the static html in
 COPY --from=builder /local-build/build/ s/cerebral-docs/
+
+# bring in the generated clients
+COPY --from=swagger-builder /local-build/source/generated/ s/cerebral-docs/generated/
 
 # bring in gem lock
 COPY --from=builder /local-build/Gemfile.lock /static/Gemfile.lock
