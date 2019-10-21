@@ -60,6 +60,9 @@ environment:
 
 # Resources allocated to your container.
 # See: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+# Expect CPU requests/limits to be overridden at deploy time by RM pipelines.
+# For more information on how those calculations are made and set checkout the wiki.
+# https://wiki.atl.workiva.net/display/INF/Vertical+Scaling+Calculations
 resources:
    limits:
      cpu: 0.25
