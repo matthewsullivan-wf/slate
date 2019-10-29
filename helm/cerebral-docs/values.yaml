@@ -109,3 +109,7 @@ readinessProbe:
 #  periodSeconds: 10
 #  timeoutSeconds: 10
 #  failureThreshold: 3
+
+labels:
+  automation.org-group: wdata
+  servicecatalog.owner: data-prep

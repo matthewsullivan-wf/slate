@@ -7,6 +7,9 @@ metadata:
     chart: {{ template "template.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicas }}
   selector:
@@ -18,6 +21,9 @@ spec:
       labels:
         app: {{ template "template.name" . }}
         release: {{ .Release.Name }}
+        {{- range $key, $value := .Values.labels }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
       annotations:
         # consul.*/ annotations will register your service in consul
         # for service discovery.
