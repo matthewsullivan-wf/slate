@@ -57,18 +57,24 @@ RUN tail -n +19 < source/includes/_swagger.md > source/includes/_swagger.md
 RUN bundle exec middleman build --clean
 
 # run stage
-FROM alpine:3.7
+FROM amazonlinux:2
+
+# add the NodeSource yum repository
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 
 #package updates
-RUN apk update && apk upgrade
+ARG BUILD_ID
+RUN yum update -y && \
+    yum upgrade -y && \
+    yum autoremove -y && \
+    yum install -y nodejs && \
+    yum clean all && \
+    rm -rf /var/cache/yum
 
 # new workdir
 WORKDIR /static/
 
-# get node ready
-RUN apk add --update nodejs
-
-# so the next command succeeds
+# node config
 RUN npm config set unsafe-perm true
 RUN npm install http-server -g
 
